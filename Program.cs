@@ -23,6 +23,9 @@ namespace HashTable
             Console.WriteLine("5th index value: " + hash5);
             string hash2 = hash.Get("2");
             Console.WriteLine("2th index value: " + hash2);
+            hash.Add("6", "Paranoids are not paranoid because they are paranoid but because they keep putting themselves deliberately into paranoid avoidable situations");
+            hash.frequencyOfWords("6");
+           
             Console.ReadKey();
         }
     }
