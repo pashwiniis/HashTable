@@ -10,22 +10,22 @@ namespace HashTable
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hash table demo"); //() []
-            MyMapNode<string, string> hash = new MyMapNode<string, string>(5);
-            hash.Add("0", "To be or not to be");
-            hash.Add("1", "be");
-            hash.Add("2", "or");
-            hash.Add("3", "not");
-            hash.Add("4", "to");
-            hash.Add("5", "be");
-            hash.frequencyOfWords("0");
-            string hash5 = hash.Get("5");
-            Console.WriteLine("5th index value: " + hash5);
-            string hash2 = hash.Get("2");
-            Console.WriteLine("2th index value: " + hash2);
-            hash.Add("6", "Paranoids are not paranoid because they are paranoid but because they keep putting themselves deliberately into paranoid avoidable situations");
-            hash.frequencyOfWords("6");
-           
+            Console.WriteLine("Welcome to HashTable Project");
+            MyMapNode<int, string> hash = new MyMapNode<int, string>(5);
+            string input = "Paranoids are not paranoid because they are paranoid but because they keep putting themselves deliberately into paranoid avoidable situations";
+            string[] array = input.Split(' ');
+            int i = 0;
+            foreach (var value in array)
+            {
+                hash.Add(i, value);
+                i++;
+            }
+            Console.WriteLine("Frequency of words in given string is :");
+            hash.FindFrequency("paranoid");
+            hash.FindFrequency("because");
+            hash.FindFrequency("are");
+            hash.FindFrequency("but");
+            hash.Remove(18);
             Console.ReadKey();
         }
     }

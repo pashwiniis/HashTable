@@ -6,68 +6,38 @@ using System.Threading.Tasks;
 
 namespace HashTable
 {
-    internal class MyMapNode<K, V>
+     class MyMapNode<K, V>
     {
         private readonly int size;
-        private readonly LinkedList<KeyValue<K, V>>[] items;
+        public readonly LinkedList<KeyValue<K, V>>[] items;
         public MyMapNode(int size)
         {
             this.size = size;
             this.items = new LinkedList<KeyValue<K, V>>[size];
-
         }
-        public void frequencyOfWords(K key)
+        public LinkedList<KeyValue<K, V>> Add(K key, V value)
         {
             int position = GetArrayPosition(key);
             LinkedList<KeyValue<K, V>> linkedList = GetLinkedList(position);
-            KeyValue<K, V> foundItem = default(KeyValue<K, V>);
-            foreach (KeyValue<K, V> item in linkedList)
-            {
-                if (item.Key.Equals(key))
-                {
-                    foundItem = item;
-                    string str = foundItem.Value.ToString();
-                    Console.WriteLine("found data = " + str);
-
-                    string[] arr = str.Split(' ');
-                    Dictionary<string, int> dict = new Dictionary<string, int>();
-                    for (int i = 0; i < arr.Length; i++)
-                    {
-                        if (dict.ContainsKey(arr[i]))
-                        {
-                            dict[arr[i]] = dict[arr[i]] + 1;
-                        }
-                        else
-                        {
-                            dict.Add(arr[i], 1);
-                        }
-                    }
-                    foreach (KeyValuePair<String, int> entry in dict)
-                    {
-                        Console.WriteLine(entry.Key + " - " +
-                                          entry.Value);
-
-                    }
-                }
-            }
-        }
-        public void Add(K key, V value)
-        {
-            int position = GetArrayPosition(key);  // |-5| =5 |3|=3 |-3|=3
-            LinkedList<KeyValue<K, V>> linkedList = GetLinkedList(position);
             KeyValue<K, V> item = new KeyValue<K, V>() { Key = key, Value = value };
             linkedList.AddLast(item);
+            return linkedList;
         }
-        public void Remove(MyMapNode<int, string> hash, string word)
+        public void FindFrequency(V value)
         {
-            for (int key = 0; key < hash.size; key++)
+            int count = 0;
+            for (int i = 0; i<5; i++)
             {
-                if (hash.Get(key).Equals(word))
+                LinkedList<KeyValue<K, V>> linkedList = items[i];
+                foreach (var item in linkedList)
                 {
-                    hash.Remove(key);
-                    Console.WriteLine("Removed " + word + " from paragraph");
+                    if (item.Value.Equals(value))
+                    {
+                        count++;
+                    }
                 }
             }
+            Console.WriteLine("{0} : {1}", value, count);
         }
         public void Remove(K key)
         {
@@ -99,14 +69,12 @@ namespace HashTable
                     return item.Value;
                 }
             }
+
             return default(V);
         }
         protected int GetArrayPosition(K key)
         {
-
-
             int position = key.GetHashCode() % size;
-
             return Math.Abs(position);
         }
 
@@ -120,11 +88,12 @@ namespace HashTable
             }
             return linkedList;
         }
-        public class KeyValue<k, v>
-        {
-            public k Key { get; set; }
-            public v Value { get; set; }
 
-        }
+    }
+    public struct KeyValue<k, v>
+    {
+        public k Key { get; set; }    //Declaring Structure for key value pair
+        public v Value { get; set; }
     }
 }
+
